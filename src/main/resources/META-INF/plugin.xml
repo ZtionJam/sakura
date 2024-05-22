@@ -1,0 +1,28 @@
+<idea-plugin>
+    <id>cn.ztion.sakura</id>
+
+    <name>Sakura</name>
+
+    <vendor email="Work@Ztion.cn" url="https://www.yourcompany.com">ZtionJam</vendor>
+    <description><![CDATA[
+    wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.modules.platform</depends>
+    <extensions defaultExtensionNs="com.intellij">
+        <extension id="com.intellij.annotationSupport"/>
+    </extensions>
+    <extensionPoints>
+        <extensionPoint dynamic="true"
+                        beanClass="cn.ztion.sakura.MappingAction" name="mappingAction"/>
+    </extensionPoints>
+    <actions>
+        <action id="GetMappingAction" class="cn.ztion.sakura.MappingAction" text="Show Mapping Value"
+                description="Show the value of the mapping">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
