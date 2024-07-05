@@ -19,7 +19,10 @@ intellij {
 
     plugins.set(listOf("java"))
 }
-
+dependencies {
+    implementation("org.projectlombok:lombok:1.18.22")
+    annotationProcessor("org.projectlombok:lombok:1.18.22")
+}
 tasks {
     // Set the JVM compatibility versions
     withType<JavaCompile> {
