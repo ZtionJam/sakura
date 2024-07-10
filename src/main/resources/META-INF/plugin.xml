@@ -5,7 +5,7 @@
 
     <vendor email="Work@Ztion.cn" url="https://www.yourcompany.com">ZtionJam</vendor>
     <description><![CDATA[
-    wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+    看看你的接口， 看看你的接口， 看看你的接口， 看看你的接口， 看看你的接口， 看看你的接口，
   ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
@@ -20,9 +20,9 @@
                         beanClass="cn.ztion.sakura.MappingAction" name="mappingAction"/>
     </extensionPoints>
     <actions>
-        <action id="GetMappingAction" class="cn.ztion.sakura.MappingAction" text="Show Mapping Value"
+        <action id="GetMappingAction" class="cn.ztion.sakura.MappingAction" text="生成接口图"
                 description="Show the value of the mapping">
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
     </actions>
 </idea-plugin>
