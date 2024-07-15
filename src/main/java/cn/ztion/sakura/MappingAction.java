@@ -13,15 +13,20 @@ import com.intellij.psi.impl.source.javadoc.PsiDocParamRef;
 import com.intellij.psi.javadoc.PsiDocTag;
 import com.intellij.psi.javadoc.PsiDocToken;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.util.text.DateFormatUtil;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MappingAction extends AnAction {
     private static final Logger log = LoggerFactory.getLogger(MappingAction.class);
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
+        AtomicBoolean percess = new AtomicBoolean(false);
         PsiUtil.getMappingAnno(e.getData(CommonDataKeys.PSI_ELEMENT)).ifPresent(anno -> {
             PsiMethod method = (PsiMethod) e.getData(CommonDataKeys.PSI_ELEMENT);
             Mapping mapping = new Mapping();
@@ -47,18 +52,25 @@ public class MappingAction extends AnAction {
             //方法参数
             PsiUtil.resolveMethodParam(e.getData(CommonDataKeys.PSI_ELEMENT), mapping);
 
+            //方法反参
+            PsiUtil.resolveResult(method, mapping);
+
             mapping.setAddress(path.toString())
                     .setMethod(anno.getData().getMethod())
-                    .setAuthor("ZtionJam")
+                    .setAuthor(System.getProperty("user.name"))
                     .setVersion("1.0")
-                    .setDate("2024-07-10")
+                    .setDate(DateFormatUtil.formatDate(new Date()))
                     .setName(classComment + "-" + methodComment);
             try {
                 PicStarter.gen(mapping, e.getProject());
+                percess.set(true);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
         });
+        if (!percess.get()) {
+            MsgUtil.showMsg("Please click with controller method");
+        }
 
     }
 

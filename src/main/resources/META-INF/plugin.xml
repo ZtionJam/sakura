@@ -5,7 +5,14 @@
 
     <vendor email="Work@Ztion.cn" url="https://www.yourcompany.com">ZtionJam</vendor>
     <description><![CDATA[
-    看看你的接口， 看看你的接口， 看看你的接口， 看看你的接口， 看看你的接口， 看看你的接口，
+    <h3>Sakura </h3>
+用于生成美观的单个接口图片和或文本，识别Swagger注解
+
+<h3>使用方法</h3>
+在Controller方法上面右键，点击查看接口
+
+<h3>效果 </h3>
+<div align="center"> <img src="https://res.ztion.cn/imgs/sakura.png" alt=""/> </div>
   ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
@@ -20,7 +27,7 @@
                         beanClass="cn.ztion.sakura.MappingAction" name="mappingAction"/>
     </extensionPoints>
     <actions>
-        <action id="GetMappingAction" class="cn.ztion.sakura.MappingAction" text="生成接口图"
+        <action id="GetMappingAction" class="cn.ztion.sakura.MappingAction" text="查看接口"
                 description="Show the value of the mapping">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>

@@ -1,6 +1,7 @@
 package cn.ztion.sakura.wapper;
 
 import cn.ztion.sakura.util.ImageTransferable;
+import cn.ztion.sakura.util.TextTransferable;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 
@@ -14,12 +15,14 @@ public class ImageDialog extends DialogWrapper {
     private final BufferedImage image;
     private final int width;
     private final int height;
+    private final String textDes;
 
-    public ImageDialog(Project project, BufferedImage image, int width, int height) {
+    public ImageDialog(Project project, BufferedImage image, String textDes, int width, int height) {
         super(project);
         this.width = width;
         this.height = height;
         this.image = image;
+        this.textDes = textDes;
         setTitle("预览");
         init();
     }
@@ -62,11 +65,19 @@ public class ImageDialog extends DialogWrapper {
 
     @Override
     protected Action[] createActions() {
-        Action okAction = new DialogWrapperAction("复制到剪切板") {
+        Action okAction = new DialogWrapperAction("复制图片到剪切板") {
             @Override
             protected void doAction(ActionEvent e) {
                 ImageTransferable.copyImageToClipboard(image);
                 doOKAction();
+            }
+        };
+
+        Action copyText = new DialogWrapperAction("复制文本到剪切板") {
+            @Override
+            protected void doAction(ActionEvent e) {
+                TextTransferable.copyTextToClipboard(textDes);
+                doCancelAction();
             }
         };
 
@@ -77,7 +88,7 @@ public class ImageDialog extends DialogWrapper {
             }
         };
 
-        return new Action[]{okAction, cancelAction};
+        return new Action[]{okAction, copyText, cancelAction};
     }
 
 }

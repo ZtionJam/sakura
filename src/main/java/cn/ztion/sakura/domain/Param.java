@@ -1,5 +1,6 @@
 package cn.ztion.sakura.domain;
 
+import cn.ztion.sakura.engine.Pic;
 import com.intellij.openapi.util.text.StringUtil;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class Param {
 
     private String name = "";
     private String type = "";
-    private String required = "";
+    private String required = "false";
     private String remark = "";
 
     private List<Param> child;
@@ -55,6 +56,9 @@ public class Param {
     }
 
     public Param setRemark(String remark) {
+        if (Pic.getLength(remark) > 8) {
+            remark = remark.substring(0, 8);
+        }
         this.remark = remark;
         return this;
     }

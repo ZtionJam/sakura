@@ -8,10 +8,7 @@ import cn.ztion.sakura.enums.*;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * psi
@@ -20,6 +17,65 @@ import java.util.Optional;
  * @date 2024/7/9
  */
 public class PsiUtil {
+
+
+    public static void resolveResult(PsiMethod method, Mapping mapping) {
+        PsiType returnType = method.getReturnType();
+        if (returnType instanceof PsiClassType classType) {
+            PsiClass psiClass = classType.resolve();
+            if (psiClass == null) {
+                return;
+            }
+            Map<String, List<Param>> par = new HashMap<>();
+            PsiType[] parameters = ((PsiClassType) returnType).getParameters();
+            for (int i = 0; i < parameters.length; i++) {
+                try {
+                    PsiType parameter = parameters[i];
+                    PsiClass resolve = ((PsiClassType) parameter).resolve();
+                    PsiTypeParameter[] typeParameters = psiClass.getTypeParameters();
+                    if (resolve != null) {
+                        if (LangUtil.isPrim(resolve.getName())) {
+                            continue;
+                        }
+                        List<Param> classField = getClassField(resolve);
+                        par.put(typeParameters[i].getName(), classField);
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+            List<Param> classField = getClassField(psiClass);
+            classField.forEach(p -> par.keySet().forEach(k -> {
+                if (k.equals(p.getType())) {
+                    p.setChild(par.get(k));
+                }
+            }));
+            mapping.setResultParam(classField);
+        }
+
+    }
+
+    public static List<Param> getClassField(PsiClass psiClass) {
+        List<Param> params = new ArrayList<>();
+        PsiField[] fields = psiClass.getAllFields();
+        for (PsiField field : fields) {
+            if ("serialVersionUID".equals(field.getName())) {
+                continue;
+            }
+            Param p = new Param()
+                    .setType(field.getTypeElement().getText())
+                    .setName(field.getName());
+            for (PsiAnnotation annotation : field.getAnnotations()) {
+                FieldApiAnno anno = FieldApiAnno.getAnno(annotation.getQualifiedName());
+                if (anno != null) {
+                    p.setRemark(getAnnoFieldVal(annotation, anno.getFieldName()));
+                    p.setRequired(getAnnoFieldVal(annotation, "required"));
+                }
+            }
+            params.add(p);
+        }
+
+        return params;
+    }
 
     public static void resolveMethodParam(PsiElement element, Mapping mapping) {
 
@@ -38,24 +94,11 @@ public class PsiUtil {
                             mapping.getBodyParam().add(getSingleParam(paramMod.getAnno(), parameter, paramMod.getData()));
                             break;
                         }
-                        List<Param> params = new ArrayList<>();
                         PsiType parameterType = parameter.getType();
                         PsiClass psiClass = ((PsiClassType) parameterType).resolve();
-                        PsiField[] fields = psiClass.getAllFields();
-                        for (PsiField field : fields) {
-                            Param p = new Param()
-                                    .setType(field.getTypeElement().getText())
-                                    .setName(field.getName());
-                            for (PsiAnnotation annotation : field.getAnnotations()) {
-                                FieldApiAnno anno = FieldApiAnno.getAnno(annotation.getQualifiedName());
-                                if (anno != null) {
-                                    p.setRemark(getAnnoFieldVal(annotation, anno.getFieldName()));
-                                    p.setRequired(getAnnoFieldVal(annotation, "required"));
-                                }
-                            }
-                            params.add(p);
+                        if (psiClass != null) {
+                            mapping.getBodyParam().addAll(getClassField(psiClass));
                         }
-                        mapping.getBodyParam().addAll(params);
                         break;
                     //路径
                     case PATH_VARIABLE:

@@ -13,7 +13,7 @@ import java.util.Set;
 public class LangUtil {
 
     private static final Set<String> PRIMITIVES_AND_WRAPPERS = new HashSet<>(Arrays.asList(
-            "byte", "short", "int", "long", "boolean", "char", "float", "double",
+            "byte", "short", "int", "long", "boolean", "char", "float", "double", "String",
             "Byte", "Short", "Integer", "Long", "Boolean", "Character", "Float", "Double", "BigInteger", "BigDecimal"));
 
     private static final Set<String> MAP_NAME = new HashSet<>(Arrays.asList(

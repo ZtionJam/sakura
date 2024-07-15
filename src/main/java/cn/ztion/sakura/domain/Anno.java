@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
- * 注解和信息
+ * info
  *
  * @author ZtionJam
  * @date 2024/7/10

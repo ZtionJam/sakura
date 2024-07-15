@@ -16,7 +16,12 @@ public enum MappingAnno {
 
     GET("org.springframework.web.bind.annotation.GetMapping", "GET", "value"),
 
-    POST("org.springframework.web.bind.annotation.PostMapping", "POST", "value");
+    POST("org.springframework.web.bind.annotation.PostMapping", "POST", "value"),
+
+    PUT("org.springframework.web.bind.annotation.PutMapping", "PUT", "value"),
+
+    DELETE("org.springframework.web.bind.annotation.DeleteMapping", "DELETE", "value"),
+    ;
 
     private final String name;
     private final String method;

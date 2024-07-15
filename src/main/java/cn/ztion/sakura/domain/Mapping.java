@@ -156,4 +156,36 @@ public class Mapping {
         this.bodyParam = bodyParam;
         return this;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("接口名：").append(this.name);
+        sb.append("\n地址：").append(this.address);
+        if (!headerParam.isEmpty()) {
+            sb.append("\n请求头参数：");
+            for (Param param : this.headerParam) {
+                sb.append("\n->").append(param.getName()).append(" ").append(param.getRemark());
+            }
+        }
+        if (!pathParam.isEmpty()) {
+            sb.append("\nPath参数：");
+            for (Param param : this.pathParam) {
+                sb.append("\n->").append(param.getName()).append(" ").append(param.getRemark());
+            }
+        }
+        if (!queryParam.isEmpty()) {
+            sb.append("\nQuery参数：");
+            for (Param param : this.queryParam) {
+                sb.append("\n->").append(param.getName()).append(" ").append(param.getRemark());
+            }
+        }
+        if (!bodyParam.isEmpty()) {
+            sb.append("\nBody参数：");
+            for (Param param : this.bodyParam) {
+                sb.append("\n->").append(param.getName()).append(" ").append(param.getRemark());
+            }
+        }
+        return sb.toString();
+    }
 }
