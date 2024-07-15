@@ -3,22 +3,19 @@
 
     <name>Sakura</name>
 
-    <vendor email="Work@Ztion.cn" url="https://www.yourcompany.com">ZtionJam</vendor>
+    <vendor email="Work@Ztion.cn" url="https://ztion.cn">ZtionJam</vendor>
     <description><![CDATA[
-    <h3>Sakura </h3>
-用于生成美观的单个接口图片和或文本，识别Swagger注解
-
-<h3>使用方法</h3>
-在Controller方法上面右键，点击查看接口
-
-<h3>效果 </h3>
-<div align="center"> <img src="https://res.ztion.cn/imgs/sakura.png" alt=""/> </div>
+### Sakura
+Used to generate beautiful single interface images and or text that recognizes Swagger annotations
+### Usage
+Right-click on the Controller method and click View Interface
+### Effect
+![ex](https://res.ztion.cn/imgs/sakura.png)
   ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.java</depends>
-    <depends>com.intellij.modules.platform</depends>
     <extensions defaultExtensionNs="com.intellij">
         <extension id="com.intellij.annotationSupport"/>
     </extensions>
